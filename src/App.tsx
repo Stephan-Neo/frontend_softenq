@@ -6,7 +6,7 @@ function App() {
   const [state, setState] = useState(null);
 
   const callBackendAPI = async () => {
-    const response = await fetch('http://localhost:8000/getUsers');
+    const response = await fetch('http://localhost:3000/getUsers');
     const body = await response.json();
 
     if (response.status !== 200) {
