@@ -1,40 +1,12 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import './App.css'
+import React, { ReactElement } from 'react';
+import GlobalStyles from './styles/global';
+import Routes from './routes';
 
-function App() {
-  const [state, setState] = useState(null);
-
-  const callBackendAPI = async () => {
-    const response = await fetch('http://localhost:3000/getUsers');
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message)
-    }
-    return body;
-  };
-
-  useEffect(() => {
-    callBackendAPI()
-    .then(res => {
-      setState(res.text)
-      console.log(res.text)
-    })
-    .catch(err => console.log(err));
-  }, [])
-
+export default function App(): ReactElement {
   return (
     <>
-      <div>
-          GTSK - company future
-          <div>
-            Users:<span></span>
-            {state}
-          </div>
-      </div>
+      <Routes />
+      <GlobalStyles />
     </>
-  )
+  );
 }
-
-export default App
