@@ -4,8 +4,7 @@ import { initReactI18next } from 'react-i18next';
 // Locales
 import { locales } from './locales';
 
-const DEFAULT_LANG: string =
-  localStorage.getItem('LOCALE') || Object.keys(locales)[0] || 'enUS';
+const DEFAULT_LANG: string = localStorage.getItem('LOCALE') || Object.keys(locales)[0] || 'enUS';
 
 i18n?.use(initReactI18next).init({
   resources: locales,
@@ -14,8 +13,8 @@ i18n?.use(initReactI18next).init({
   keySeparator: false,
 
   interpolation: {
-    escapeValue: false
-  }
+    escapeValue: false,
+  },
 });
 
 export const setLanguage = (locale: string): void => {

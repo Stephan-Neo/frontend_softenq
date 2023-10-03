@@ -6,5 +6,5 @@ import enUS from './enUS.json';
 
 export const locales: Resource = {
   ruRU,
-  enUS
+  enUS,
 };

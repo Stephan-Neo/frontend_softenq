@@ -4,6 +4,7 @@
     "jest": true
   },
   "parserOptions": {
+    "files": ["*.ts", "*.tsx"],
     "ecmaVersion": 9,
     "project": "./tsconfig.json"
   },

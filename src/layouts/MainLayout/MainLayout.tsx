@@ -13,7 +13,7 @@ function MainLayout(): ReactElement {
     <Wrapper isDark={appStore.isDark}>
       <Header isDark={appStore.isDark}>
         <div>
-          <Link to="/">
+          <Link to="/main">
             <LogoHeader src="/icon.svg" alt="" />
           </Link>
         </div>
