@@ -1,14 +1,19 @@
 import React, { ReactElement } from 'react';
+import  { useNavigate  } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { setLanguage } from '../../localization';
 import appStore from '../../stores/AppStore';
+import userStore from '../../stores/UserStore';
 
 function MainLayout(): ReactElement {
   const { t } = useTranslation();
-
+  let navigate = useNavigate();
+  const routeChange = () =>{
+    navigate('/');
+  }
   return (
     <Wrapper isDark={appStore.isDark}>
       <Header isDark={appStore.isDark}>
@@ -42,6 +47,14 @@ function MainLayout(): ReactElement {
                 ? appStore.setTheme(false)
                 : appStore.setTheme(true)
             }
+          />
+          <LogOut
+            onClick={() => {
+              localStorage.clear()
+              userStore.setAccessToken('')
+              routeChange()
+            }
+          }
           />
         </Navigate>
       </Header>
@@ -139,6 +152,18 @@ const ChangeTheme = styled.div<{ isDark: boolean }>`
         ? './sun.ico'
         : './moon.ico'})
     100% 5% / cover no-repeat;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const LogOut = styled.div`
+  display: flex;
+  margin-left: 40px;
+  flex-direction: row;
+  width: 40px;
+  height: 40px;
+  background: url(${'./logout.ico'}) 50% / cover;
   :hover {
     cursor: pointer;
   }

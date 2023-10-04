@@ -35,6 +35,8 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     isSubmitting,
   } = props;
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <Wrapper>
       <Title>Login</Title>
@@ -64,9 +66,6 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
 
         <LoginButton
           type="submit"
-          disabled={
-            isSubmitting
-          }
         >
           Login
         </LoginButton>
