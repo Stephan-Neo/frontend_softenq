@@ -6,13 +6,15 @@ import Wrapper from "./styles/Wrapper";
 import InputWrapper from "./styles/InputWrapper";
 import Input from "./styles/Input";
 import styled from 'styled-components';
-import { loginUser } from '../../api/User';
+import { signUpUser } from '../../api/User';
 import { observer } from 'mobx-react-lite';
-import userStore from '../../stores/UserStore';
+import { useNavigate } from 'react-router-dom';
 
 interface FormValues {
   email: string;
   password: string;
+  name: string;
+  phone: string;
 }
 
 interface OtherProps {
@@ -22,6 +24,8 @@ interface OtherProps {
 interface MyFormProps {
   initialEmail?: string;
   initialPassword?: string;
+  initialPhone?: string;
+  initialName?: string;
 }
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
@@ -37,7 +41,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
 
   return (
     <Wrapper>
-      <Title>Login</Title>
+      <Title>Sign Up</Title>
       <form onSubmit={handleSubmit}>
         <InputWrapper>
           <Input
@@ -61,11 +65,32 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
             placeholder="Password"
           />
         </InputWrapper>
-
+        <InputWrapper>
+          <Input
+            width={300}
+            type="text"
+            name="name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
+            placeholder="Nick Name"
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <Input
+            width={300}
+            type="text"
+            name="phone"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.phone}
+            placeholder="Phone"
+          />
+        </InputWrapper>
         <LoginButton
           type="submit"
         >
-          Login
+          Sign Up
         </LoginButton>
       </form>
     </Wrapper>
@@ -75,30 +100,34 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
 const MyForm  = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: props => ({
     email: props.initialEmail || "",
-    password: props.initialPassword || ""
+    password: props.initialPassword || "",
+    name: props.initialName || "",
+    phone: props.initialPhone || ""
   }),
 
   validationSchema: Yup.object().shape({
     email: Yup.string()
       .email("Email not valid")
       .required("Email is required"),
-    password: Yup.string().required("Password is required")
+    password: Yup.string().required("Password is required"),
+    name: Yup.string()
+      .required("Name is required"),
+    phone: Yup.string()
+      .required("Phone is required"),
   }),
 
   handleSubmit(
-    { email, password }: FormValues,
+    { email, password, name, phone }: FormValues,
     { props, setSubmitting, setErrors }
   ) {
-    loginUser(email, password).then((res) => {
-      userStore.setAccessToken(res.data.token.accessToken)
-      userStore.setProfile(res)
-      localStorage.setItem('accessToken', res.data.token.accessToken);
-      localStorage.setItem('user', JSON.stringify(res));
+    signUpUser(email, password, phone, name).then((res) => {
+        alert("Вы успешно зарегистрировались!")
+        window.location.replace("http://localhost:8000")
     })
   }
 })(InnerForm);
 
-function LoginLayout(): ReactElement {
+function SignUpLayout(): ReactElement {
   return (
       <MyForm />
   )
@@ -121,4 +150,4 @@ const LoginButton = styled.button`
   }
 `;
 
-export default observer(LoginLayout);
+export default observer(SignUpLayout);

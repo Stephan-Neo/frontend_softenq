@@ -3,7 +3,8 @@ import { Route, Routes as CRoutes } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
 import Main from './Main';
 import NotFound from '../components/NotFound';
-import LoginLayout from '../layouts/LoginLayout/LoginLayout';
+import { LoginLayout } from '../layouts/LoginLayout';
+import { SignUpLayout } from '../layouts/SginUpLayout';
 import { observer } from 'mobx-react-lite';
 import userStore from '../stores/UserStore';
 import Profile from './Profile';
@@ -25,7 +26,10 @@ function Routes(): ReactElement {
         <Route path="*" element={<NotFound />} />
       </Route>
       :
-      <Route path="/" element={<LoginLayout />}></Route>
+          <>
+            <Route path='/' element={<LoginLayout />} />
+            <Route path='/signup' element={<SignUpLayout />} />
+          </>
       }
     </CRoutes>
   );
