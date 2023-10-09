@@ -1,11 +1,11 @@
 // Helpers
-import axios from './helpers/axios';
+import axios from 'axios'
 
 // types
 import { User } from '../types/user';
 
 export const loginUser = async (email: string, password: string): Promise<User> => {
-  const res = await axios.post<User>('auth/login', {
+  const res = await axios.post<User>('api/auth/login', {
     email,
     password,
   });
@@ -13,7 +13,7 @@ export const loginUser = async (email: string, password: string): Promise<User> 
 };
 
 export const signUpUser = async (email: string, password: string, phone: string, name: string): Promise<User> => {
-  const res = await axios.post<User>('auth/signup', {
+  const res = await axios.post<User>('api/auth/signup', {
     email,
     password,
     phone,
