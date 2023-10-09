@@ -1,7 +1,10 @@
-FROM node:18
-WORKDIR /app
-COPY package.json .
+FROM node:18 as development
+WORKDIR /usr/src/app
+COPY package*.json .
 RUN yarn install
 COPY . .
-EXPOSE 8000
-CMD ["yarn", "dev"]
+RUN yarn run build
+FROM nginx:stable-alpine as production
+COPY --from=development /usr/src/app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+CMD ["nginx", "-g", "daemon off;"]

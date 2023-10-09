@@ -26,10 +26,10 @@ function Routes(): ReactElement {
         <Route path="*" element={<NotFound />} />
       </Route>
       :
-          <>
+          <Route>
             <Route path='/' element={<LoginLayout />} />
             <Route path='/signup' element={<SignUpLayout />} />
-          </>
+          </Route>
       }
     </CRoutes>
   );
