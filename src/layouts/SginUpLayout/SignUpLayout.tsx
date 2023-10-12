@@ -23,9 +23,9 @@ export default function SignUpLayout() {
   });
   const onSubmit = (data: FormData) => {
     signUpUser(data.email, data.password, data.phone, data.nickname).then(() => {
-      navigate('/')
       toast(`Вы успешно зарегистрировались! Подвердите почту ${data.email} (на нее отправлена ссылка)
          иначе зайти на сервис не получится`)
+      setTimeout(() => {navigate('/')}, 6000)
     }).catch((res: ErrorRes) => {
       toast(res.response.data.error.message)
     })
