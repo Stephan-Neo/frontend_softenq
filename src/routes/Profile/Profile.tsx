@@ -18,7 +18,7 @@ function Profile(): ReactElement {
         Email: {user?.data.profile.email}
       </div>
       <div>
-        Подверждение email: {user?.data.profile.confirmEmail ? "Подтвержден" : "Не подтвержден"}`
+        Подверждение email: {user?.data.profile.confirmEmail ? "Подтвержден" : "Не подтвержден"}
       </div>
     </Wrapper>
   );
