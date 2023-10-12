@@ -121,7 +121,8 @@ const MyForm  = withFormik<MyFormProps, FormValues>({
     { props, setSubmitting, setErrors }
   ) {
     signUpUser(email, password, phone, name).then((res) => {
-        alert(`Вы успешно зарегистрировались! Подвердиет почу ${email} иначе зайти на сервис не получится`)
+        alert(`Вы успешно зарегистрировались! Подвердиет почту ${email} (на нее отправлена ссылка)
+         иначе зайти на сервис не получится`)
         window.location.replace("https://gtsk.site")
     }).catch((res: ErrorRes) => {
       console.log(res)
