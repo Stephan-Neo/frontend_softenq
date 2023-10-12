@@ -13,6 +13,7 @@ export interface User {
       name: string;
       phone: string;
       role: string;
+      confirmEmail: boolean;
     };
   };
   meta: {

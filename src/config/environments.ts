@@ -1,3 +1,3 @@
 export default {
-  baseApiUrl: 'https://gtsk-api.site',
+  baseApiUrl: 'http://localhost:3000',
 };

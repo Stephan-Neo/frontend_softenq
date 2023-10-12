@@ -8,7 +8,7 @@ import Input from "./styles/Input";
 import styled from 'styled-components';
 import { signUpUser } from '../../api/User';
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
+import { ErrorRes } from '../../types/error';
 
 interface FormValues {
   email: string;
@@ -122,7 +122,10 @@ const MyForm  = withFormik<MyFormProps, FormValues>({
   ) {
     signUpUser(email, password, phone, name).then((res) => {
         alert("Вы успешно зарегистрировались!")
-        window.location.replace("http://localhost:8000")
+        window.location.replace("https://gtsk.site")
+    }).catch((res: ErrorRes) => {
+      console.log(res)
+      alert(res.response.data.error.message)
     })
   }
 })(InnerForm);

@@ -8,6 +8,7 @@ import { SignUpLayout } from '../layouts/SginUpLayout';
 import { observer } from 'mobx-react-lite';
 import userStore from '../stores/UserStore';
 import Profile from './Profile';
+import ConfirmEmail from './ConfirmEmail';
 
 function Routes(): ReactElement {
   useEffect(() => {
@@ -29,6 +30,7 @@ function Routes(): ReactElement {
           <Route>
             <Route path='/' element={<LoginLayout />} />
             <Route path='/signup' element={<SignUpLayout />} />
+            <Route path='/confirm-email' element={<ConfirmEmail />} />
           </Route>
       }
     </CRoutes>

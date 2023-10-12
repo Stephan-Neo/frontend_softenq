@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { loginUser } from '../../api/User';
 import { observer } from 'mobx-react-lite';
 import userStore from '../../stores/UserStore';
+import { ErrorRes } from '../../types/error';
 
 interface FormValues {
   email: string;
@@ -94,6 +95,9 @@ const MyForm  = withFormik<MyFormProps, FormValues>({
       userStore.setProfile(res)
       localStorage.setItem('accessToken', res.data.token.accessToken);
       localStorage.setItem('user', JSON.stringify(res));
+    }).catch((res: ErrorRes) => {
+      console.log(res)
+      alert(res.response.data.error.message)
     })
   }
 })(InnerForm);

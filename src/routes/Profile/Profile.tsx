@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import userStore from '../../stores/UserStore';
@@ -14,6 +13,12 @@ function Profile(): ReactElement {
       <br/>
       <div>
         Номер: {user?.data.profile.phone}
+      </div>
+      <div>
+        Email: {user?.data.profile.email}
+      </div>
+      <div>
+        Подверждение email: {user?.data.profile.confirmEmail}
       </div>
     </Wrapper>
   );

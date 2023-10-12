@@ -1,5 +1,5 @@
 // Helpers
-import axios from 'axios'
+import axios from 'axios';
 
 // types
 import { User } from '../types/user';
@@ -17,7 +17,12 @@ export const signUpUser = async (email: string, password: string, phone: string,
     email,
     password,
     phone,
-    name
+    name,
   });
+  return res.data;
+};
+
+export const confirmEmail = async (hash: string): Promise<User> => {
+  const res = await axios.post<User>(`api/auth/confirm-email?hash=${hash}`);
   return res.data;
 };
