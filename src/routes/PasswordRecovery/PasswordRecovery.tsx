@@ -2,60 +2,38 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import * as yup from "yup";
-import { loginUser } from '../../api/User';
-import userStore from '../../stores/UserStore';
 import { ErrorRes } from '../../types/error';
-import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { passwordRecovery } from '../../api/User';
 
 const schema = yup.object({
   email: yup.string().email().required(),
-  password: yup.string().min(6).required(),
 }).required();
 type FormData = yup.InferType<typeof schema>;
 
-export default function LoginLayout() {
-  const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+export default function PasswordRecovery() {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
     resolver: yupResolver(schema)
   });
   const onSubmit = (data: FormData) => {
-    loginUser(data.email, data.password).then((res) => {
-      userStore.setAccessToken(res.data.token.accessToken)
-      userStore.setProfile(res)
-      localStorage.setItem('accessToken', res.data.token.accessToken);
-      localStorage.setItem('user', JSON.stringify(res));
+    passwordRecovery(data.email).then((res) => {
+      toast(`На почту ${data.email} отправлена ссылка на восстановление пароля`)
+      reset()
     }).catch((res: ErrorRes) => {
-      if (res.response.data.error.message == "Forbidden") {
-        toast('Email не подтвержден, потдвердите email');
-      } else {
-        toast(res.response.data.error.message)
-      }
+      toast(res.response.data.error.message);
     })
   };
-  const forgotPas = () => {
-    navigate('/password-recovery')
-  }
-  const signUp = () => {
-    navigate('/signup')
-  }
 
   return (
     <Wrapper>
-      <Title>Login</Title>
+      <Title>Password Recovery</Title>
       <form onSubmit={handleSubmit(onSubmit)}>
         <WrapperInput>
           <Input {...register("email")} placeholder={'Email'}/>
           <Error>{errors.email?.message}</Error>
         </WrapperInput>
-        <WrapperInput>
-          <Input {...register("password")} type={'password'} placeholder={'Password'}/>
-          <Error>{errors.password?.message}</Error>
-        </WrapperInput>
         <Submit type="submit" />
-        <ForgotPas onClick={forgotPas}>Forgot password?</ForgotPas>
-        <SignUp onClick={signUp}>Sign Up</SignUp>
       </form>
       <ToastContainer />
     </Wrapper>
@@ -93,27 +71,6 @@ const Error = styled.div`
   font-size: 14px;
   color: red;
   margin-top: 5px;
-`;
-
-const ForgotPas = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  color: rgba(0, 0, 255, 0.56);
-  
-  :hover {
-    cursor: pointer;
-  }
-`;
-
-const SignUp = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  color: rgba(0, 255, 82, 0.6);
-  margin-top: 30px;
-
-  :hover {
-    cursor: pointer;
-  }
 `;
 
 const Input = styled.input`

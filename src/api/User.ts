@@ -26,3 +26,18 @@ export const confirmEmail = async (hash: string): Promise<User> => {
   const res = await axios.post<User>(`api/auth/confirm-email?hash=${hash}`);
   return res.data;
 };
+
+export const passwordRecovery = async (email: string): Promise<User> => {
+  const res = await axios.post<User>('api/auth/password-recovery', {
+    email
+  });
+  return res.data;
+};
+
+export const updatePassword = async (hash: string, password: string): Promise<User> => {
+  const res = await axios.post<User>(`api/auth/update-password?hash=${hash}`, {
+    password
+  });
+  return res.data;
+};
+

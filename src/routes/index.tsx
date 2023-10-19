@@ -4,11 +4,13 @@ import { MainLayout } from '../layouts/MainLayout';
 import Main from './Main';
 import NotFound from '../components/NotFound';
 import { LoginLayout } from '../layouts/LoginLayout';
-import { SignUpLayout } from '../layouts/SginUpLayout';
+import { SignUpLayout } from '../layouts/SignUpLayout';
 import { observer } from 'mobx-react-lite';
 import userStore from '../stores/UserStore';
 import Profile from './Profile';
 import ConfirmEmail from './ConfirmEmail';
+import PasswordRecovery from './PasswordRecovery';
+import UpdatePassword from './UpdatePassword';
 
 function Routes(): ReactElement {
   useEffect(() => {
@@ -31,6 +33,8 @@ function Routes(): ReactElement {
             <Route path='/' element={<LoginLayout />} />
             <Route path='/signup' element={<SignUpLayout />} />
             <Route path='/confirm-email' element={<ConfirmEmail />} />
+            <Route path='/password-recovery' element={<PasswordRecovery />} />
+            <Route path='/update-password' element={<UpdatePassword />} />
           </Route>
       }
     </CRoutes>
