@@ -12,9 +12,6 @@ function Profile(): ReactElement {
       </div>
       <br/>
       <div>
-        Номер: {user?.data.profile.phone}
-      </div>
-      <div>
         Email: {user?.data.profile.email}
       </div>
       <div>

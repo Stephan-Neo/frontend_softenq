@@ -11,7 +11,6 @@ export interface User {
       updatedAt: string;
       email: string;
       name: string;
-      phone: string;
       role: string;
       confirmEmail: boolean;
     };

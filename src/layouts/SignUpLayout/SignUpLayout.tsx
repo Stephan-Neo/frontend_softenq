@@ -11,8 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const schema = yup.object({
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
-  nickname: yup.string().min(3).required(),
-  phone: yup.string().min(11).required()
+  nickname: yup.string().min(3).required()
 }).required();
 type FormData = yup.InferType<typeof schema>;
 
@@ -22,7 +21,7 @@ export default function SignUpLayout() {
     resolver: yupResolver(schema)
   });
   const onSubmit = (data: FormData) => {
-    signUpUser(data.email, data.password, data.phone, data.nickname).then(() => {
+    signUpUser(data.email, data.password, data.nickname).then(() => {
       toast(`Вы успешно зарегистрировались! Подвердите почту ${data.email} (на нее отправлена ссылка)
          иначе зайти на сервис не получится`)
       setTimeout(() => {navigate('/')}, 6000)
@@ -49,10 +48,6 @@ export default function SignUpLayout() {
         <WrapperInput>
           <Input {...register("nickname")} placeholder={'Nickname'}/>
           <Error>{errors.nickname?.message}</Error>
-        </WrapperInput>
-        <WrapperInput>
-          <Input {...register("phone")} placeholder={'Phone'}/>
-          <Error>{errors.phone?.message}</Error>
         </WrapperInput>
         <Submit type="submit" />
         <Login onClick={login}>Login</Login>
