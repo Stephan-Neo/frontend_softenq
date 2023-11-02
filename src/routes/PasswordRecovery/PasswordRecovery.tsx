@@ -47,7 +47,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: ${'#303845'};
+  background: linear-gradient(to bottom right, #191970, #7B68EE);
 `;
 
 const WrapperInput = styled.div`
