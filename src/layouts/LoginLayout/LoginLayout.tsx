@@ -54,8 +54,11 @@ export default function LoginLayout() {
           <Error>{errors.password?.message}</Error>
         </WrapperInput>
         <Submit type="submit" />
-        <ForgotPas onClick={forgotPas}>Forgot password?</ForgotPas>
-        <SignUp onClick={signUp}>Sign Up</SignUp>
+        <Buttons>
+          <SignUp onClick={signUp}>Sign Up</SignUp>
+          <ForgotPas onClick={forgotPas}>Forgot password?</ForgotPas>
+        </Buttons>
+        
       </form>
       <ToastContainer />
     </Wrapper>
@@ -69,7 +72,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: ${'#303845'};
+  background: linear-gradient(to bottom right, #191970, #7B68EE);
 `;
 
 const WrapperInput = styled.div`
@@ -85,7 +88,7 @@ const Title = styled.div`
   font-size: 24px;
   margin-bottom: 40px;
   font-weight: bold;
-  color: white;
+  color: rgba(255, 255, 255, 0.8);
 `;
 
 const Error = styled.div`
@@ -98,22 +101,29 @@ const Error = styled.div`
 const ForgotPas = styled.div`
   font-size: 16px;
   font-weight: bold;
-  color: rgba(0, 0, 255, 0.56);
+  color: rgba(255, 255, 255, 0.8);
   
   :hover {
     cursor: pointer;
+    text-decoration: underline;
   }
 `;
 
 const SignUp = styled.div`
   font-size: 16px;
   font-weight: bold;
-  color: rgba(0, 255, 82, 0.6);
-  margin-top: 30px;
+  color: rgba(255, 255, 255, 0.8);
 
   :hover {
     cursor: pointer;
+    text-decoration: underline;
   }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Input = styled.input`
