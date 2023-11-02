@@ -12,6 +12,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/tron': {
+        target: environments.baseTronApiUrl,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/tron/, ''),
+      },
     },
     watch: {
       usePolling: true,
