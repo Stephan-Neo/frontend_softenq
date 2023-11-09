@@ -1,13 +1,16 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { listTransactions } from '../../api/Tron';
 import tronStore from '../../stores/TronStore';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 
 
 function Main(): ReactElement {
-  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const infoCheck = (hash: string) => {
+    navigate(`/transaction?hash=${hash}`)
+  };
   useEffect(() => {
     listTransactions(true, 20, 0, 1529856000000, 1680503191391).
     then((res) => {
@@ -21,7 +24,7 @@ function Main(): ReactElement {
         <Title>Transactions</Title>
         {tronStore.transactions?.data.map((tran) => {
           return (
-            <WrapperTransactions>
+            <WrapperTransactions onClick={() => {infoCheck(tran.hash)}}>
               <OwnerAddress>
                 {tran.ownerAddress}
               </OwnerAddress>
@@ -60,6 +63,11 @@ const WrapperTransactions = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 20px;
+  cursor: pointer;
+  
+  :hover {
+    background: #706868;
+  }
 `;
 
 const ToAdress = styled.div`
