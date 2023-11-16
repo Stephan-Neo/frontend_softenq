@@ -64,4 +64,4 @@ uploads/*
 
 .yarn
 .vscode
-
+yarn.lock

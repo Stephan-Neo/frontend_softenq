@@ -19,7 +19,7 @@ function Main(): ReactElement {
     navigate(`/personalTransaction?address=${address}`)
   }
   useEffect(() => {
-    listTransactions(true, 20, 0, 1529856000000, 1680503191391).
+    listTransactions(true, 20, 0, startTimestamp, endTimestamp).
     then((res) => {
       tronStore.setTransactions(res)
       console.log(tronStore.transactions?.data[0].toAddress)
