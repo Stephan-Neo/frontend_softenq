@@ -13,6 +13,7 @@ import PasswordRecovery from './PasswordRecovery';
 import UpdatePassword from './UpdatePassword';
 import Transaction from './Transaction';
 import Wallet from './Wallet';
+import TransactionPersonalList from './TransactionPersonalList/TransactionPersonalList';
 
 function Routes(): ReactElement {
   useEffect(() => {
@@ -30,6 +31,7 @@ function Routes(): ReactElement {
         <Route path="/profile" element={<Profile />} />
         <Route path="/transaction" element={<Transaction />} />
         <Route path="/wallet" element={<Wallet />} />
+        <Route path="/personalTransaction" element={<TransactionPersonalList />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       :

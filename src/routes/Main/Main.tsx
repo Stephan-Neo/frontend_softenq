@@ -15,16 +15,25 @@ function Main(): ReactElement {
   const twentyFourHoursInMilliseconds: number = 24 * 60 * 60 * 1000;
   const startTimestamp: number = endTimestamp - twentyFourHoursInMilliseconds;
 
+  const personalInfoCheck = (address: string) => {
+    navigate(`/personalTransaction?address=${address}`)
+  }
   useEffect(() => {
-    listTransactions(true, 20, 0, startTimestamp, endTimestamp).
+    listTransactions(true, 20, 0, 1529856000000, 1680503191391).
     then((res) => {
       tronStore.setTransactions(res)
+      console.log(tronStore.transactions?.data[0].toAddress)
     })
   }, [])
   return (
     <Wrapper>
       <>
         <Title>Transactions</Title>
+        <TitleColumn>
+          <div>From</div>
+          <div>Amount</div>
+          <div>To</div>
+        </TitleColumn>
         {tronStore.transactions?.data.map((tran) => {
           return (
             <WrapperTransactions onClick={() => {infoCheck(tran.hash)}}>
@@ -60,32 +69,62 @@ const Title = styled.div`
   margin-bottom: 30px;
 `;
 
+const TitleColumn = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 30px;
+
+  div {
+    width: 33%;
+    text-align: center;
+    font-size: 30px
+  }
+`;
+
 const WrapperTransactions = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 20px;
-  cursor: pointer;
-  
-  :hover {
-    background: #706868;
-  }
 `;
 
 const ToAdress = styled.div`
   font-size: 16px;
   font-weight: 800;
+  width: 40%;
+  text-align: center;
+  
+  :hover {
+    cursor: pointer;
+    color: rgb(69, 86, 184);
+  }
 `;
 
 const OwnerAddress = styled.div`
   font-size: 16px;
   font-weight: 800;
+  width: 40%;
+  text-align: center;
+
+  :hover {
+    cursor: pointer;
+    color: rgb(69, 86, 184);
+  }
 `;
 
 const Amount = styled.div`
   font-size: 16px;
   font-weight: 800;
+  width: 20%;
+  text-align: center;
+  
+  :hover {
+    cursor: pointer;
+    color: rgb(69, 86, 184);
+  }
 `;
 
 

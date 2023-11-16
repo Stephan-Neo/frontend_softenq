@@ -11,6 +11,9 @@ class TronStore {
   @observable
   address: string | undefined;
 
+  @observable
+  transactionPersonalList: TransactionPersonalList | undefined;
+
   @action
   setTransactions = (isTransactions: Transactions) => {
     this.transactions = isTransactions;
@@ -24,6 +27,11 @@ class TronStore {
   @action
   setAddress = (isAdress: string) => {
     this.address = isAdress;
+  };
+
+  @action
+  setTransactionPersonalList = (isTransactionPersonalList: TransactionPersonalList) => {
+    this.transactionPersonalList = isTransactionPersonalList;
   };
 
   constructor() {
