@@ -39,7 +39,7 @@ function Main(): ReactElement {
               <Amount onClick={() => {infoCheck(tran.hash)}}>
                 {tran.amount}
               </Amount>
-              <ToAdress>
+              <ToAdress onClick={() => {personalInfoCheck(tran.toAddress)}}>
                 {tran.toAddress}
               </ToAdress>
             </WrapperTransactions>
