@@ -36,11 +36,11 @@ function Main(): ReactElement {
         </TitleColumn>
         {tronStore.transactions?.data.map((tran) => {
           return (
-            <WrapperTransactions onClick={() => {infoCheck(tran.hash)}}>
-              <OwnerAddress>
+            <WrapperTransactions>
+              <OwnerAddress onClick={() => {personalInfoCheck(tran.ownerAddress)}}>
                 {tran.ownerAddress}
               </OwnerAddress>
-              <Amount>
+              <Amount onClick={() => {infoCheck(tran.hash)}}>
                 {tran.amount}
               </Amount>
               <ToAdress onClick={() => {personalInfoCheck(tran.toAddress)}}>
