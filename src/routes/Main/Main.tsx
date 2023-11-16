@@ -1,13 +1,16 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { listTransactions } from '../../api/Tron';
 import tronStore from '../../stores/TronStore';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 
 
 function Main(): ReactElement {
-  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const infoCheck = (hash: string) => {
+    navigate(`/transaction?hash=${hash}`)
+  };
   useEffect(() => {
     listTransactions(true, 20, 0, 1529856000000, 1680503191391).
     then((res) => {
@@ -19,13 +22,18 @@ function Main(): ReactElement {
     <Wrapper>
       <>
         <Title>Transactions</Title>
+        <TitleColumn>
+          <div>From</div>
+          <div>Amount</div>
+          <div>To</div>
+        </TitleColumn>
         {tronStore.transactions?.data.map((tran) => {
           return (
             <WrapperTransactions>
               <OwnerAddress>
                 {tran.ownerAddress}
               </OwnerAddress>
-              <Amount>
+              <Amount onClick={() => {infoCheck(tran.hash)}}>
                 {tran.amount}
               </Amount>
               <ToAdress>
@@ -54,6 +62,20 @@ const Title = styled.div`
   margin-bottom: 30px;
 `;
 
+const TitleColumn = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 30px;
+
+  div {
+    width: 33%;
+    text-align: center;
+    font-size: 30px
+  }
+`;
+
 const WrapperTransactions = styled.div`
   width: 100%;
   display: flex;
@@ -65,16 +87,37 @@ const WrapperTransactions = styled.div`
 const ToAdress = styled.div`
   font-size: 16px;
   font-weight: 800;
+  width: 40%;
+  text-align: center;
+  
+  :hover {
+    cursor: pointer;
+    color: rgb(69, 86, 184);
+  }
 `;
 
 const OwnerAddress = styled.div`
   font-size: 16px;
   font-weight: 800;
+  width: 40%;
+  text-align: center;
+
+  :hover {
+    cursor: pointer;
+    color: rgb(69, 86, 184);
+  }
 `;
 
 const Amount = styled.div`
   font-size: 16px;
   font-weight: 800;
+  width: 20%;
+  text-align: center;
+  
+  :hover {
+    cursor: pointer;
+    color: rgb(69, 86, 184);
+  }
 `;
 
 
