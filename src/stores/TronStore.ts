@@ -1,5 +1,5 @@
 import { action, makeObservable, observable } from 'mobx';
-import { Transaction, Transactions } from '../types/tron';
+import { Transaction, TransactionPersonalList, Transactions } from '../types/tron';
 
 class TronStore {
   @observable
@@ -7,6 +7,9 @@ class TronStore {
 
   @observable
   transaction: Transaction | undefined;
+
+  @observable
+  transactionPersonalList: TransactionPersonalList | undefined;
 
   @action
   setTransactions = (isTransactions: Transactions) => {
@@ -16,6 +19,11 @@ class TronStore {
   @action
   setTransaction = (isTransaction: Transaction) => {
     this.transaction = isTransaction;
+  };
+
+  @action
+  setTransactionPersonalList = (isTransactionPersonalList: TransactionPersonalList) => {
+    this.transactionPersonalList = isTransactionPersonalList;
   };
 
   constructor() {

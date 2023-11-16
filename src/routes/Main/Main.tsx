@@ -11,6 +11,9 @@ function Main(): ReactElement {
   const infoCheck = (hash: string) => {
     navigate(`/transaction?hash=${hash}`)
   };
+  const personalInfoCheck = (address: string) => {
+    navigate(`/personalTransaction?address=${address}`)
+  }
   useEffect(() => {
     listTransactions(true, 20, 0, 1529856000000, 1680503191391).
     then((res) => {
@@ -30,7 +33,7 @@ function Main(): ReactElement {
         {tronStore.transactions?.data.map((tran) => {
           return (
             <WrapperTransactions>
-              <OwnerAddress>
+              <OwnerAddress onClick={() => {personalInfoCheck(tran.ownerAddress)}}>
                 {tran.ownerAddress}
               </OwnerAddress>
               <Amount onClick={() => {infoCheck(tran.hash)}}>

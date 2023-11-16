@@ -12,6 +12,7 @@ import ConfirmEmail from './ConfirmEmail';
 import PasswordRecovery from './PasswordRecovery';
 import UpdatePassword from './UpdatePassword';
 import Transaction from './Transaction';
+import TransactionPersonalList from './TransactionPersonalList/TransactionPersonalList';
 
 function Routes(): ReactElement {
   useEffect(() => {
@@ -28,6 +29,7 @@ function Routes(): ReactElement {
         <Route path="/main" element={<Main />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/transaction" element={<Transaction />} />
+        <Route path="/personalTransaction" element={<TransactionPersonalList />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       :
