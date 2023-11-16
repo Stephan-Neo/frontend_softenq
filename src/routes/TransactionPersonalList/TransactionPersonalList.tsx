@@ -19,6 +19,8 @@ function TransactionPersonalList(): ReactElement {
     transactionPersonalList(address, startTimestamp, endTimestamp).
     then((res) => {
       tronStore.setTransactionPersonalList(res)
+      console.log(res)
+      console.log(tronStore.transactionPersonalList?.data[0].from)
     })
   }, [])
   return (
@@ -27,12 +29,12 @@ function TransactionPersonalList(): ReactElement {
         <Title>Current users info transaction</Title>
         {tronStore.transactionPersonalList?.data.map((tran) => {
           return (
-            <>
+            <WrapperInfo>
               <Info>Address: <InfoText>{address}</InfoText></Info>
               <Info>From: <InfoText>{tran.from}</InfoText></Info>
               <Info>Amount: <InfoText>{tran.amount}</InfoText></Info>
               <Info>To: <InfoText>{tran.to}</InfoText></Info>
-            </>
+            </WrapperInfo>
           )
         })}
         
@@ -55,6 +57,10 @@ const Title = styled.div`
   font-size: 50px;
   font-weight: 800;
   margin-bottom: 30px;
+`;
+
+const WrapperInfo = styled.div`
+  margin-bottom: 50px;
 `;
 
 const Info = styled.div`
