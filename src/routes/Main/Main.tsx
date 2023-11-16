@@ -11,6 +11,10 @@ function Main(): ReactElement {
   const infoCheck = (hash: string) => {
     navigate(`/transaction?hash=${hash}`)
   };
+  const endTimestamp: number = Date.now();
+  const twentyFourHoursInMilliseconds: number = 24 * 60 * 60 * 1000;
+  const startTimestamp: number = endTimestamp - twentyFourHoursInMilliseconds;
+
   const personalInfoCheck = (address: string) => {
     navigate(`/personalTransaction?address=${address}`)
   }
@@ -32,11 +36,11 @@ function Main(): ReactElement {
         </TitleColumn>
         {tronStore.transactions?.data.map((tran) => {
           return (
-            <WrapperTransactions>
-              <OwnerAddress onClick={() => {personalInfoCheck(tran.ownerAddress)}}>
+            <WrapperTransactions onClick={() => {infoCheck(tran.hash)}}>
+              <OwnerAddress>
                 {tran.ownerAddress}
               </OwnerAddress>
-              <Amount onClick={() => {infoCheck(tran.hash)}}>
+              <Amount>
                 {tran.amount}
               </Amount>
               <ToAdress onClick={() => {personalInfoCheck(tran.toAddress)}}>
