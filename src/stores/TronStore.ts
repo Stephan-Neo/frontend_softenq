@@ -1,5 +1,5 @@
 import { action, makeObservable, observable } from 'mobx';
-import { Transaction, Transactions } from '../types/tron';
+import { Transaction, Transactions, TransactionPersonalList } from '../types/tron';
 
 class TronStore {
   @observable
