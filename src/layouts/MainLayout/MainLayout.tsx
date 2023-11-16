@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import { setLanguage } from '../../localization';
 import appStore from '../../stores/AppStore';
 import userStore from '../../stores/UserStore';
 
@@ -23,23 +22,8 @@ function MainLayout(): ReactElement {
           </Link>
         </div>
         <Navigate>
-          <HeaderLink to="profile">{t('profile')}</HeaderLink>
-          <ChangeLanguage>
-            <ButtonLanguageRu
-              type="button"
-              onClick={() => setLanguage('ruRU')}
-              isActive={localStorage.getItem('LOCALE') || ''}
-            >
-              RU
-            </ButtonLanguageRu>
-            <ButtonLanguageEu
-              type="button"
-              onClick={() => setLanguage('enUS')}
-              isActive={localStorage.getItem('LOCALE') || ''}
-            >
-              EN
-            </ButtonLanguageEu>
-          </ChangeLanguage>
+          <HeaderLink to="profile">Profile</HeaderLink>
+          <HeaderLink to="wallet">Wallet</HeaderLink>
           <ChangeTheme
             isDark={appStore.isDark}
             onClick={() =>
@@ -110,30 +94,6 @@ const HeaderLink = styled(NavLink)`
 
 const LogoHeader = styled.img`
   width: 50px;
-`;
-
-const ChangeLanguage = styled.div`
-  width: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const ButtonLanguageRu = styled.button<{ isActive: string }>`
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  color: ${({ isActive }) => (isActive === 'ruRU' ? 'white' : 'black')};
-  background: ${({ isActive }) => (isActive === 'ruRU' ? 'black' : 'white')};
-`;
-
-const ButtonLanguageEu = styled.button<{ isActive: string }>`
-  width: 40px;
-  height: 40px;
-  background: white;
-  border-radius: 10px;
-  color: ${({ isActive }) => (isActive === 'enUS' ? 'white' : 'black')};
-  background: ${({ isActive }) => (isActive === 'enUS' ? 'black' : 'white')};
 `;
 
 const Navigate = styled.div`
