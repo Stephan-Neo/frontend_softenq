@@ -96,3 +96,27 @@ export interface Transaction {
     "account_create_fee": number
   },
 }
+
+export interface TransactionPersonalList {
+  "data": [
+    {
+        "amount": number,
+        "block_timestamp": number,
+        "block": number,
+        "from": string,
+        "to": string,
+        "hash": string,
+        "confirmed": number,
+        "contract_type": string,
+        "contractType": number,
+        "revert": number,
+        "contract_ret": string,
+        "id": number,
+        "symbol": string,
+        "issue_address": string,
+        "decimals": number,
+        "token_name": string,
+        "direction": number
+    },
+]
+}
