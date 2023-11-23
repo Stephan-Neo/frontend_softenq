@@ -6,8 +6,10 @@ import styled from 'styled-components';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import appStore from '../../stores/AppStore';
 import userStore from '../../stores/UserStore';
+import tronStore from '../../stores/TronStore';
 
 function MainLayout(): ReactElement {
+  const address = tronStore.address
   const { t } = useTranslation();
   let navigate = useNavigate();
   const routeChange = () =>{
@@ -23,6 +25,7 @@ function MainLayout(): ReactElement {
         </div>
         <Navigate>
           <HeaderLink to="profile">Profile</HeaderLink>
+          <HeaderLink to={`myTransaction?address=${address}`}>My transaction</HeaderLink>
           <HeaderLink to="wallet">Wallet</HeaderLink>
           <ChangeTheme
             isDark={appStore.isDark}

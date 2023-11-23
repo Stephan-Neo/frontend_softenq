@@ -8,6 +8,8 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import tronStore from '../../stores/TronStore';
 import { observer } from 'mobx-react-lite';
+import userStore from '../../stores/UserStore';
+import { addWallet } from '../../api/wallet';
 
 function Wallet() {
   function onError(e: WalletError) {
@@ -35,8 +37,11 @@ function ConnectComponent() {
 }
 function Profile() {
   const { address, connected, wallet } = useWallet();
+  const userId = userStore.profile?.data.profile.id;
   useEffect(() => {
-    tronStore.setAddress(`${address}`)
+    addWallet(userId!, address!).then(() => {
+      tronStore.setAddress(`${address}`)
+    })
   }, [connected])
   return (
       <>
