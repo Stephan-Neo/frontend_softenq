@@ -26,7 +26,7 @@ export const infoTransaction = async (hash: string): Promise<Transaction> => {
 export const transactionPersonalList = async (address: string, 
                                               startTimeStamp: number, 
                                               endTimeStamp: number): Promise<TransactionPersonalList> => {
-    const res = await axios.get<TransactionPersonalList>(`tron/transfer/token10?address=${address}&trc10Id=1002000&start=0&direction=0&reverse=true&db_version=1&start_timestamp=&end_timestamp=`
+  const res = await axios.get<TransactionPersonalList>(`tron/transfer/trx?address=${address}&start=0&direction=0&reverse=true&db_version=1&start_timestamp=&end_timestamp=  `
   );
 
   return res.data;

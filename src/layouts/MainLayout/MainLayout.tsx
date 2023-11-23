@@ -90,6 +90,10 @@ const HeaderLink = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  :hover{
+    color: white;
+  }
 `;
 
 const LogoHeader = styled.img`

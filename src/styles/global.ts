@@ -81,10 +81,10 @@ export default createGlobalStyle`
   }
   
   a{
-    color: white;
+    color: black;
   }
   
   .active{
-    color: black;
+    color: white;
   }
 `;

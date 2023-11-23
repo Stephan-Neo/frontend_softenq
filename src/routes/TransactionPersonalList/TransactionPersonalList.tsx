@@ -4,20 +4,24 @@ import { transactionPersonalList } from '../../api/Tron';
 import tronStore from '../../stores/TronStore';
 import { observer } from 'mobx-react-lite';
 import { useLocation } from 'react-router-dom';
+import {Spin} from 'antd';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 }
 
 function TransactionPersonalList(): ReactElement {
+  const [spinning, setSpinning] = React.useState<boolean>(false);
   let query = useQuery();
   let address = query.get("address") || ""
   const endTimestamp: number = Date.now();
   const twentyFourHoursInMilliseconds: number = 24 * 60 * 60 * 1000;
   const startTimestamp: number = endTimestamp - twentyFourHoursInMilliseconds;
   useEffect(() => {
+    setSpinning(true);
     transactionPersonalList(address, startTimestamp, endTimestamp).
     then((res) => {
+      setSpinning(false);
       tronStore.setTransactionPersonalList(res)
       console.log(res)
       console.log(tronStore.transactionPersonalList?.data[0].from)
@@ -26,6 +30,7 @@ function TransactionPersonalList(): ReactElement {
   return (
     <Wrapper>
       <>
+        <Spin spinning={spinning} fullscreen />
         <Title>Current users info transaction</Title>
         {tronStore.transactionPersonalList?.data.map((tran) => {
           return (

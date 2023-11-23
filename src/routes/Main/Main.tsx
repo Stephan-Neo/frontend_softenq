@@ -4,10 +4,13 @@ import { listTransactions } from '../../api/Tron';
 import tronStore from '../../stores/TronStore';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
+import { LoadingOutlined } from '@ant-design/icons';
+import {Spin} from 'antd';
 
 
 function Main(): ReactElement {
   const navigate = useNavigate();
+  const [spinning, setSpinning] = React.useState<boolean>(false);
   const infoCheck = (hash: string) => {
     navigate(`/transaction?hash=${hash}`)
   };
@@ -19,8 +22,10 @@ function Main(): ReactElement {
     navigate(`/personalTransaction?address=${address}`)
   }
   useEffect(() => {
+    setSpinning(true);
     listTransactions(true, 20, 0, startTimestamp, endTimestamp).
     then((res) => {
+      setSpinning(false);
       tronStore.setTransactions(res)
       console.log(tronStore.transactions?.data[0].toAddress)
     })
@@ -28,6 +33,8 @@ function Main(): ReactElement {
   return (
     <Wrapper>
       <>
+        <Spin spinning={spinning} fullscreen />
+        <>
         <Title>Transactions</Title>
         <TitleColumn>
           <div>From</div>
@@ -49,6 +56,7 @@ function Main(): ReactElement {
             </WrapperTransactions>
           )
         })}
+        </>
       </>
     </Wrapper>
   );
