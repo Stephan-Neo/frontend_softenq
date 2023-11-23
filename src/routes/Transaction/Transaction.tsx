@@ -4,17 +4,21 @@ import { infoTransaction } from '../../api/Tron';
 import tronStore from '../../stores/TronStore';
 import { observer } from 'mobx-react-lite';
 import { useLocation } from 'react-router-dom';
+import {Spin} from 'antd';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 }
 
 function Transaction(): ReactElement {
+  const [spinning, setSpinning] = React.useState<boolean>(false);
   let query = useQuery();
   let hash = query.get("hash") || ""
   useEffect(() => {
+    setSpinning(true);
     infoTransaction(hash).
     then((res) => {
+      setSpinning(false);
       tronStore.setTransaction(res)
       console.log(res)
     })
@@ -22,12 +26,12 @@ function Transaction(): ReactElement {
   return (
     <Wrapper>
       <>
+        <Spin spinning={spinning} fullscreen />
         <Title>Info transaction</Title>
         <Info>Hash: <InfoText>{tronStore.transaction?.hash}</InfoText></Info>
         <Info>Block: <InfoText>{tronStore.transaction?.block}</InfoText></Info>
         <Info>Confirmed: <InfoText>{tronStore.transaction?.confirmed ? "Confirmed": "Not confirmed"}</InfoText></Info>
         <Info>Fee: <InfoText>{tronStore.transaction?.cost.fee}</InfoText></Info>
-        <></>
       </>
     </Wrapper>
   );
