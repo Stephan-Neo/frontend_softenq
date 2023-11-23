@@ -19,6 +19,7 @@ function Profile(): ReactElement {
         <Info>Имя: <InfoText>{user?.data.profile.name}</InfoText></Info>
         <Info>Email: <InfoText>{user?.data.profile.email}</InfoText></Info>
         <Info>Подверждение email: <InfoText>{user?.data.profile.confirmEmail ? "Подтвержден" : "Не подтвержден"}</InfoText></Info>
+        <Info>Адрес кошелька: <InfoText>{tronStore.address}</InfoText></Info>
     </Wrapper>
   );
 }
