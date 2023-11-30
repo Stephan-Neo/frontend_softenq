@@ -31,19 +31,17 @@ function TransactionPersonalList(): ReactElement {
     <Wrapper>
       <>
         <Spin spinning={spinning} fullscreen />
-        <Title>Current users info transaction</Title>
+        <Title>Information about current user's transactions</Title>
+        <AddressInfo>Selected address: <InfoText>{address}</InfoText></AddressInfo>
         {tronStore.transactionPersonalList?.data.map((tran) => {
           return (
             <WrapperInfo>
-              <Info>Address: <InfoText>{address}</InfoText></Info>
               <Info>From: <InfoText>{tran.from}</InfoText></Info>
               <Info>Amount: <InfoText>{tran.amount}</InfoText></Info>
               <Info>To: <InfoText>{tran.to}</InfoText></Info>
             </WrapperInfo>
           )
         })}
-        
-        <></>
       </>
     </Wrapper>
   );
@@ -64,6 +62,15 @@ const Title = styled.div`
   margin-bottom: 30px;
 `;
 
+const AddressInfo = styled.div`
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+`;
+
 const WrapperInfo = styled.div`
   margin-bottom: 50px;
 `;
@@ -71,7 +78,7 @@ const WrapperInfo = styled.div`
 const Info = styled.div`
   font-size: 24px;
   font-weight: 800;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -80,7 +87,7 @@ const Info = styled.div`
 
 const InfoText = styled.div`
   font-size: 20px;
-  color: #5270b8;
+  color: #219ebc;
   margin-left: 30px;
 `;
 

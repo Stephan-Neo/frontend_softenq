@@ -50,7 +50,9 @@ export default function SignUpLayout() {
           <Error>{errors.nickname?.message}</Error>
         </WrapperInput>
         <Submit type="submit" />
-        <Login onClick={login}>Login</Login>
+        <Buttons>
+          <Login onClick={login}>Login</Login>
+        </Buttons>
       </form>
       <ToastContainer />
     </Wrapper>
@@ -74,6 +76,12 @@ const WrapperInput = styled.div`
   margin-bottom: 20px;
   align-items: center;
   justify-content: center;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Title = styled.div`

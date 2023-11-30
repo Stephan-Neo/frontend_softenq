@@ -33,7 +33,6 @@ function Main(): ReactElement {
     <Wrapper>
       <>
         <Spin spinning={spinning} fullscreen />
-        <>
         <Title>Transactions</Title>
         <TitleColumn>
           <div>From</div>
@@ -55,7 +54,6 @@ function Main(): ReactElement {
             </WrapperTransactions>
           )
         })}
-        </>
       </>
     </Wrapper>
   );
@@ -95,7 +93,8 @@ const WrapperTransactions = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #b6b6b69d;
 `;
 
 const ToAdress = styled.div`
@@ -103,10 +102,11 @@ const ToAdress = styled.div`
   font-weight: 800;
   width: 40%;
   text-align: center;
+  margin-bottom: 10px;
   
   :hover {
     cursor: pointer;
-    color: rgb(69, 86, 184);
+    color: #219ebc;
   }
 `;
 
@@ -118,7 +118,7 @@ const OwnerAddress = styled.div`
 
   :hover {
     cursor: pointer;
-    color: rgb(69, 86, 184);
+    color: #219ebc;
   }
 `;
 
@@ -130,7 +130,7 @@ const Amount = styled.div`
   
   :hover {
     cursor: pointer;
-    color: rgb(69, 86, 184);
+    color: #219ebc;
   }
 `;
 

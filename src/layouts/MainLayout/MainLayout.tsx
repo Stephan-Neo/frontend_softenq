@@ -25,7 +25,7 @@ function MainLayout(): ReactElement {
         </div>
         <Navigate>
           <HeaderLink to="profile">Profile</HeaderLink>
-          <HeaderLink to={`myTransaction?address=${address}`}>My transaction</HeaderLink>
+          <HeaderLink to={`myTransaction?address=${address}`}>My transactions</HeaderLink>
           <HeaderLink to="wallet">Wallet</HeaderLink>
           <ChangeTheme
             isDark={appStore.isDark}
@@ -45,7 +45,7 @@ function MainLayout(): ReactElement {
           />
         </Navigate>
       </Header>
-      <Content>
+      <Content isDark={appStore.isDark}>
         <Outlet />
       </Content>
       <Footer isDark={appStore.isDark}>
@@ -61,7 +61,7 @@ function MainLayout(): ReactElement {
 const Wrapper = styled.div<{ isDark: boolean }>`
   width: 100%;
   min-height: 100%;
-  background-color: ${({ isDark }) => (isDark ? '#303845' : 'white')};
+  background-color: ${({ isDark }) => (isDark ? '#023047' : '#ffffff')};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -69,7 +69,7 @@ const Wrapper = styled.div<{ isDark: boolean }>`
 
 const Header = styled.div<{ isDark: boolean }>`
   padding: 20px 30px;
-  background-color: ${({ isDark }) => (isDark ? '#303845' : '#4556b8')};
+  background-color: ${({ isDark }) => (isDark ? '#219ebc' : '#219ebc')};
   font-size: 30px;
   color: white;
   display: flex;
@@ -78,11 +78,12 @@ const Header = styled.div<{ isDark: boolean }>`
   align-items: center;
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ isDark: boolean }>`
   min-height: 100ch;
   width: 100%;
   display: flex;
   flex-direction: column;
+  color: ${({ isDark }) => (isDark ? '#ffb703' : '#000000')};
 `;
 
 const HeaderLink = styled(NavLink)`
@@ -114,7 +115,7 @@ const ChangeTheme = styled.div<{ isDark: boolean }>`
   flex-direction: row;
   width: 40px;
   height: 40px;
-  background: url(${({ isDark }) =>
+  background: url(${({ isDark }) => 
       isDark
         ? './sun.ico'
         : './moon.ico'})
@@ -141,7 +142,7 @@ const LogoFooter = styled.img`
 `;
 
 const Footer = styled.div<{ isDark: boolean }>`
-  background-color: ${({ isDark }) => (isDark ? '#303845' : '#4556b8')};
+  background-color: ${({ isDark }) => (isDark ? '#219ebc' : '#219ebc')};
   height: 100px;
   display: flex;
   flex-direction: row;
