@@ -5,6 +5,7 @@ import tronStore from '../../stores/TronStore';
 import { observer } from 'mobx-react-lite';
 import { useLocation } from 'react-router-dom';
 import {Spin} from 'antd';
+import Chart from 'react-apexcharts';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -12,6 +13,8 @@ const useQuery = () => {
 
 function TransactionPersonalList(): ReactElement {
   const [spinning, setSpinning] = React.useState<boolean>(false);
+  const [ownwerAdsress, setOwnerAddress] = React.useState<any>([])
+  const [amount, setAmount] = React.useState<any>([])
   let query = useQuery();
   let address = query.get("address") || ""
   const endTimestamp: number = Date.now();
@@ -23,16 +26,45 @@ function TransactionPersonalList(): ReactElement {
     then((res) => {
       setSpinning(false);
       tronStore.setTransactionPersonalList(res)
-      console.log(res)
-      console.log(tronStore.transactionPersonalList?.data[0].from)
+      if (Array.isArray(res.data) && res.data.length > 0) {
+        setOwnerAddress(res.data.map(tron => tron.to));
+        setAmount(res.data.map(tron => tron.amount));
+      }
     })
   }, [])
+  const options = {
+    options: {
+      chart: {
+        id: "basic-bar"
+      },
+      xaxis: {
+        categories: ownwerAdsress
+      }
+    },
+    series: [
+      {
+        name: "series-1",
+        data: amount
+      }
+    ]
+  }
   return (
     <Wrapper>
       <>
         <Spin spinning={spinning} fullscreen />
         <Title>Information about current user's transactions</Title>
         <AddressInfo>Selected address: <InfoText>{address}</InfoText></AddressInfo>
+        <Chart
+          options={options.options}
+          series={options.series}
+          type="bar"
+          width="700"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        />
         {tronStore.transactionPersonalList?.data.map((tran) => {
           return (
             <WrapperInfo>

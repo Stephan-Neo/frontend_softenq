@@ -4,18 +4,39 @@ import { listTransactions } from '../../api/Tron';
 import tronStore from '../../stores/TronStore';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
+import Chart from "react-apexcharts";
 import {Spin} from 'antd';
+import { ReloadOutlined } from '@ant-design/icons';
 
 
 function Main(): ReactElement {
   const navigate = useNavigate();
   const [spinning, setSpinning] = React.useState<boolean>(false);
+  const [update, setUpdate] = React.useState<boolean>(true);
+  const [ownwerAdsress, setOwnerAddress] = React.useState<any>([])
+  const [amount, setAmount] = React.useState<any>([])
   const infoCheck = (hash: string) => {
     navigate(`/transaction?hash=${hash}`)
   };
   const endTimestamp: number = Date.now();
   const twentyFourHoursInMilliseconds: number = 24 * 60 * 60 * 1000;
   const startTimestamp: number = endTimestamp - twentyFourHoursInMilliseconds;
+  const options = {
+    options: {
+      chart: {
+        id: "basic-bar"
+      },
+      xaxis: {
+        categories: ownwerAdsress
+      }
+    },
+    series: [
+      {
+        name: "series-1",
+        data: amount
+      }
+    ]
+  }
 
   const personalInfoCheck = (address: string) => {
     navigate(`/personalTransaction?address=${address}`)
@@ -26,14 +47,34 @@ function Main(): ReactElement {
     then((res) => {
       setSpinning(false);
       tronStore.setTransactions(res)
-      console.log(tronStore.transactions?.data[0].toAddress)
+      if (Array.isArray(res.data) && res.data.length > 0) {
+        setOwnerAddress(res.data.map(tron => tron.ownerAddress));
+        setAmount(res.data.map(tron => tron.amount));
+      }
+      setUpdate(false)
     })
-  }, [])
+  }, [update])
   return (
     <Wrapper>
       <>
         <Spin spinning={spinning} fullscreen />
-        <Title>Transactions</Title>
+        <WrapperTitle>
+          <Title>Transactions</Title>
+          <UpdateButton onClick={() => setUpdate(true)}>
+            <ReloadOutlined />
+          </UpdateButton>
+        </WrapperTitle>
+        <Chart
+          options={options.options}
+          series={options.series}
+          type="bar"
+          width="700"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          />
         <TitleColumn>
           <div>From</div>
           <div>Amount</div>
@@ -72,6 +113,18 @@ const Title = styled.div`
   font-size: 50px;
   font-weight: 800;
   margin-bottom: 30px;
+`;
+
+const WrapperTitle = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const UpdateButton = styled.button`
+  width: 50px;
+  height: 50px;
 `;
 
 const TitleColumn = styled.div`
