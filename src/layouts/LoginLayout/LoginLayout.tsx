@@ -26,6 +26,7 @@ export default function LoginLayout() {
       userStore.setProfile(res)
       localStorage.setItem('accessToken', res.data.token.accessToken);
       localStorage.setItem('user', JSON.stringify(res));
+      navigate('main');
     }).catch((res: ErrorRes) => {
       if (res.response.data.error.message == "Forbidden") {
         toast('Email не подтвержден, потдвердите email');

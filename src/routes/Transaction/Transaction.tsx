@@ -64,7 +64,7 @@ const Info = styled.div`
 
 const InfoText = styled.div`
   font-size: 20px;
-  color: #5270b8;
+  color: #219ebc;
   margin-left: 30px;
 `;
 
