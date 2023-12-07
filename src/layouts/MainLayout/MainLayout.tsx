@@ -147,12 +147,10 @@ const Header = styled.div<{ isDark: boolean }>`
   padding: 20px 30px;
   background-color: ${({ isDark }) => (isDark ? '#219ebc' : '#219ebc')};
   font-size: 30px;
-  color: white;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  
   @media(min-height: 800px) {
     padding: 10px 30px;
   }

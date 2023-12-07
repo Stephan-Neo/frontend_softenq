@@ -21,13 +21,17 @@ function Main(): ReactElement {
   const endTimestamp: number = Date.now();
   const twentyFourHoursInMilliseconds: number = 24 * 60 * 60 * 1000;
   const startTimestamp: number = endTimestamp - twentyFourHoursInMilliseconds;
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
   const options = {
     options: {
       chart: {
         id: "basic-bar"
       },
+      dataLabels: {
+        enabled: false
+      },
       xaxis: {
-        categories: ownwerAdsress
+        categories: ownwerAdsress,
       }
     },
     series: [
@@ -41,11 +45,22 @@ function Main(): ReactElement {
   const personalInfoCheck = (address: string) => {
     navigate(`/personalTransaction?address=${address}`)
   }
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
   useEffect(() => {
     setSpinning(true);
+
+    window.addEventListener('resize', handleResize);
+    
     listTransactions(true, 20, 0, startTimestamp, endTimestamp).
     then((res) => {
       setSpinning(false);
+
+      window.removeEventListener('resize', handleResize);
+
       tronStore.setTransactions(res)
       if (Array.isArray(res.data) && res.data.length > 0) {
         setOwnerAddress(res.data.map(tron => tron.ownerAddress));
@@ -80,8 +95,9 @@ function Main(): ReactElement {
           <div>Amount</div>
           <div>To</div>
         </TitleColumn>
-        {tronStore.transactions?.data.map((tran) => {
-          return (
+        {tronStore.transactions?.data.map((tran) => { return(
+          windowWidth > 800
+          ? (
             <WrapperTransactions>
               <OwnerAddress onClick={() => {personalInfoCheck(tran.ownerAddress)}}>
                 {tran.ownerAddress}
@@ -94,6 +110,19 @@ function Main(): ReactElement {
               </ToAdress>
             </WrapperTransactions>
           )
+          : (
+            <WrapperTransactions>
+              <OwnerAddress onClick={() => {personalInfoCheck(tran.ownerAddress)}}>
+                {tran.ownerAddress}
+              </OwnerAddress>
+              <Amount onClick={() => {infoCheck(tran.hash)}}>
+                {tran.amount}
+              </Amount>
+              <ToAdress onClick={() => {personalInfoCheck(tran.toAddress)}}>
+                {tran.toAddress}
+              </ToAdress>
+            </WrapperTransactions>
+          ))
         })}
       </>
     </Wrapper>
@@ -104,7 +133,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 50px;
   padding: 30px;
   font-weight: 800;
 `;
