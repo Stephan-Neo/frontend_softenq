@@ -51,16 +51,17 @@ function Main(): ReactElement {
   };
 
   useEffect(() => {
-    setSpinning(true);
-
     window.addEventListener('resize', handleResize);
-    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  });
+
+  useEffect(() => {
+    setSpinning(true);
     listTransactions(true, 20, 0, startTimestamp, endTimestamp).
     then((res) => {
       setSpinning(false);
-
-      window.removeEventListener('resize', handleResize);
-
       tronStore.setTransactions(res)
       if (Array.isArray(res.data) && res.data.length > 0) {
         setOwnerAddress(res.data.map(tron => tron.ownerAddress));
@@ -71,60 +72,86 @@ function Main(): ReactElement {
   }, [update])
   return (
     <Wrapper>
-      <>
-        <Spin spinning={spinning} fullscreen />
-        <WrapperTitle>
-          <Title>Transactions</Title>
-          <UpdateButton onClick={() => setUpdate(true)}>
-            <ReloadOutlined />
-          </UpdateButton>
-        </WrapperTitle>
-        <Chart
-          options={options.options}
-          series={options.series}
-          type="bar"
-          width="700"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          />
-        <TitleColumn>
-          <div>From</div>
-          <div>Amount</div>
-          <div>To</div>
-        </TitleColumn>
-        {tronStore.transactions?.data.map((tran) => { return(
-          windowWidth > 800
-          ? (
-            <WrapperTransactions>
-              <OwnerAddress onClick={() => {personalInfoCheck(tran.ownerAddress)}}>
-                {tran.ownerAddress}
-              </OwnerAddress>
-              <Amount onClick={() => {infoCheck(tran.hash)}}>
-                {tran.amount}
-              </Amount>
-              <ToAdress onClick={() => {personalInfoCheck(tran.toAddress)}}>
-                {tran.toAddress}
-              </ToAdress>
-            </WrapperTransactions>
-          )
-          : (
-            <WrapperTransactions>
-              <OwnerAddress onClick={() => {personalInfoCheck(tran.ownerAddress)}}>
-                {tran.ownerAddress}
-              </OwnerAddress>
-              <Amount onClick={() => {infoCheck(tran.hash)}}>
-                {tran.amount}
-              </Amount>
-              <ToAdress onClick={() => {personalInfoCheck(tran.toAddress)}}>
-                {tran.toAddress}
-              </ToAdress>
-            </WrapperTransactions>
-          ))
-        })}
-      </>
+        {windowWidth >= 800 ? (
+          <>
+            <Spin spinning={spinning} fullscreen />
+            <WrapperTitle>
+              <Title>Transactions</Title>
+              <UpdateButton onClick={() => setUpdate(true)}>
+                <ReloadOutlined />
+              </UpdateButton>
+            </WrapperTitle>
+            <Chart
+              options={options.options}
+              series={options.series}
+              type="bar"
+              width="700"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              />
+            <TitleColumn>
+              <div>From</div>
+              <div>Amount</div>
+              <div>To</div>
+            </TitleColumn>
+            {tronStore.transactions?.data.map((tran) => { 
+              return (
+                <WrapperTransactions>
+                  <OwnerAddress onClick={() => {personalInfoCheck(tran.ownerAddress)}}>
+                    {tran.ownerAddress}
+                  </OwnerAddress>
+                  <Amount onClick={() => {infoCheck(tran.hash)}}>
+                    {tran.amount}
+                  </Amount>
+                  <ToAdress onClick={() => {personalInfoCheck(tran.toAddress)}}>
+                    {tran.toAddress}
+                  </ToAdress>
+                </WrapperTransactions>
+              )
+            })}
+          </>
+        ) : (
+          <>
+              <Spin spinning={spinning} fullscreen />
+            <WrapperTitle>
+              <Title>Transactions</Title>
+              <UpdateButton onClick={() => setUpdate(true)}>
+                <ReloadOutlined />
+              </UpdateButton>
+            </WrapperTitle>
+            <Chart
+              options={options.options}
+              series={options.series}
+              type="bar"
+              width="100%"
+              height="300px"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              />
+            <TitleColumn>
+              <div>Block</div>
+              <div>Amount</div>
+            </TitleColumn>
+            {tronStore.transactions?.data.map((tran) => { 
+              return (
+                <WrapperTransactions>
+                  <Block>
+                    {tran.block}
+                  </Block>
+                  <Amount onClick={() => {infoCheck(tran.hash)}}>
+                    {tran.amount}
+                  </Amount>
+                </WrapperTransactions>
+              )
+            })}
+          </>
+        )}
     </Wrapper>
   );
 }
@@ -141,6 +168,10 @@ const Title = styled.div`
   font-size: 50px;
   font-weight: 800;
   margin-bottom: 30px;
+
+  @media(max-width: 800px) {
+    font-size: 30px;
+  }
 `;
 
 const WrapperTitle = styled.div`
@@ -148,11 +179,20 @@ const WrapperTitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media(max-width: 800px) {
+    width: 70%;
+  }
 `;
 
 const UpdateButton = styled.button`
   width: 50px;
   height: 50px;
+
+  @media(max-width: 800px) {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const TitleColumn = styled.div`
@@ -165,7 +205,16 @@ const TitleColumn = styled.div`
   div {
     width: 33%;
     text-align: center;
-    font-size: 30px
+    font-size: 30px;
+  }
+
+  @media(max-width: 800px) {
+    margin-top: 10px;
+    div {
+      width: 40%;
+      text-align: center;
+      font-size: 20px;
+    }
   }
 `;
 
@@ -213,6 +262,18 @@ const Amount = styled.div`
     cursor: pointer;
     color: #219ebc;
   }
+
+  @media(max-width: 800px) {
+    width: 40%
+  }
+`;
+
+const Block = styled.div`
+  font-size: 16px;
+  font-weight: 800;
+  width: 40%;
+  text-align: center;
+  margin-bottom: 10px;
 `;
 
 
