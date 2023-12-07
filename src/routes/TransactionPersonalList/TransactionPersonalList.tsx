@@ -37,6 +37,9 @@ function TransactionPersonalList(): ReactElement {
       chart: {
         id: "basic-bar"
       },
+      dataLabels: {
+        enabled: false
+      },
       xaxis: {
         categories: ownwerAdsress
       }
