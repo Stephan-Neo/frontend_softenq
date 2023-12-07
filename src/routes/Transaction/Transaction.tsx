@@ -50,6 +50,10 @@ const Title = styled.div`
   font-size: 50px;
   font-weight: 800;
   margin-bottom: 30px;
+  
+  @media(max-width: 800px) {
+    font-size: 30px;
+  }
 `;
 
 const Info = styled.div`
@@ -60,12 +64,21 @@ const Info = styled.div`
   display: flex;
   flex-direction: row;
   align-items: baseline;
+
+  @media(max-width: 800px) {
+    font-size: 16px;
+  }
 `;
 
 const InfoText = styled.div`
   font-size: 20px;
   color: #219ebc;
   margin-left: 30px;
+
+  @media(max-width: 800px) {
+    font-size: 18px;
+    overflow: scroll;
+  }
 `;
 
 export default observer(Transaction);

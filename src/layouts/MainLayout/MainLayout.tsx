@@ -151,8 +151,8 @@ const Header = styled.div<{ isDark: boolean }>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  @media(min-height: 800px) {
-    padding: 10px 30px;
+  @media(min-width: 800px) {
+    padding: 10px 10px;
   }
 `;
 
